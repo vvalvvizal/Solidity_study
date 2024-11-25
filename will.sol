@@ -11,22 +11,34 @@ contract Will{
         fortune = msg.value;
         deceased = false;
     }
-    modifier onlyOwner public{
-        require(msg.sender==owner)
+    modifier onlyOwner {
+        require(msg.sender==owner);
         _;
     }
-    modifier mustBeDeceased public{
-    require(deceased==owner)
+    modifier mustBeDeceased{
+    require(deceased==true);
     _;
     }
 
 
-    address payable[] familyWallets
+    address payable[] familyWallets;
     
-    mapping(address => uint) inheritance
+    mapping(address => uint) inheritance;
 
-    function setInheritance(address payable wallet, uint amount) public{
+    function setInheritance(address payable wallet, uint amount) public onlyOwner{
         familyWallets.push(wallet);
         inheritance[wallet] = amount;
+    }
+
+    function payout() private mustBeDeceased{
+        for( uint i=0; i<familyWallets.length; i++){
+            familyWallets[i].transfer(inheritance[familyWallets[i]]);
+        }
+    }
+
+    //orcle switch simulation
+    function hasDeceased() public onlyOwner{//트리거
+      deceased = true;
+      payout();
     }
 }
