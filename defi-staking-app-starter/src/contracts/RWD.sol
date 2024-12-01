@@ -1,10 +1,10 @@
-//contracts/Tether.sol 
+//contracts/RWD.sol 
 
 pragma solidity ^0.5.0; 
 
-contract Tether{
-    string name='Tether';
-    string symbol='USDT'; //종목코드
+contract RWD{
+    string name='Reward Token';
+    string symbol='RWD'; //종목코드
     uint256 totalSupply = 1000000000000000000;// 총공급 
     uint decimals = 18;
     
@@ -22,7 +22,7 @@ contract Tether{
 
     mapping(address=>uint256) public balanceOf;
     mapping(address=> mapping(address=>uint256)) public allowance ;
-    constructor() public {
+    constructor() public{
         balanceOf[msg.sender] = totalSupply;
     }
 
@@ -47,7 +47,7 @@ contract Tether{
         balanceOf[_to] += _value;
         balanceOf[_from] -= _value;
 
-        allowance[msg.sender][_from] -= _value;
+        allowance[msg.sender][_from] -=_value;
         emit Transfer(_from, _to, _value);
         return true;
     }
