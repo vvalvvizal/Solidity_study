@@ -3,10 +3,10 @@
 pragma solidity ^0.5.0; 
 
 contract Tether{
-    string name='Tether';
-    string symbol='USDT'; //종목코드
-    uint256 totalSupply = 1000000000000000000;// 총공급 
-    uint decimals = 18;
+    string public name='Mock Tether Token';
+    string public symbol='USDT'; //종목코드
+    uint256 public totalSupply = 1000000000000000000000000;// 총공급 토큰 100만개 
+    uint public decimals = 18;
     
     event Transfer(
         address indexed _from,

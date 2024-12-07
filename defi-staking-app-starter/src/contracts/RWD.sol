@@ -3,10 +3,10 @@
 pragma solidity ^0.5.0; 
 
 contract RWD{
-    string name='Reward Token';
-    string symbol='RWD'; //종목코드
-    uint256 totalSupply = 1000000000000000000;// 총공급 
-    uint decimals = 18;
+    string public name='Reward Token';
+    string public symbol='RWD'; //종목코드
+    uint256 public totalSupply = 1000000000000000000000000;// 총공급 
+    uint public decimals = 18;
     
     event Transfer(
         address indexed _from,
