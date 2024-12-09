@@ -6,6 +6,7 @@ import Tether from "../truffle_abis/Tether.json";
 import RWD from "../truffle_abis/RWD.json";
 import DecentralBank from "../truffle_abis/DecentralBank.json";
 import ParticleSettings from "./ParticleSetting";
+import Main from "./Main";
 class App extends Component {
   async componentWillMount() {
     await this.loadWeb3();
@@ -34,7 +35,7 @@ class App extends Component {
     const rwdTokenData = RWD.networks[networkId];
     if (rwdTokenData) {
       const rwd = new web3.eth.Contract(RWD.abi, rwdTokenData.address);
-      this.setState({ RWD });
+      this.setState({ rwd });
       let rwdTokenBalance = await rwd.methods
         .balanceOf(this.state.account)
         .call();
@@ -141,17 +142,14 @@ class App extends Component {
 
     return (
       <div className="App" style={{ position: "relative" }}>
-        <div style={{ position: "absolute" }}>
-          <ParticleSettings />
-        </div>
+        <div style={{ position: "absolute" }}></div>
         <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
           <div className="row">
             <main
               role="main"
               className="col-lg-12 ml-auto mr-auto"
-              style={{ maxWidth: "600px" }}
-              style={{ minHeight: "100vm" }}
+              style={{ maxWidth: "600px", minHeight: "100vm" }}
             >
               <div>{content}</div>
             </main>
