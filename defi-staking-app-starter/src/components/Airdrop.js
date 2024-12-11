@@ -15,17 +15,25 @@ class Airdrop extends Component {
     }
   }
 
+  issueTokens() {
+    fetch("http://localhost:5000/issue-tokens")
+      .then((response) => response.text())
+      .then((data) => {
+        console.log("Tokens issued:", data);
+      })
+      .catch((error) => console.error("Error issuing tokens:", error));
+  }
+
   countDown() {
-    // 1 . countdown one second at a time
     let seconds = this.state.seconds - 1;
 
     this.setState({
       time: this.secondsToTime(seconds),
       seconds: seconds,
     });
-    // 2. stop counting when we hit zero
     if (seconds == 0) {
       clearInterval(this.timer);
+      this.issueTokens();
     }
   }
 

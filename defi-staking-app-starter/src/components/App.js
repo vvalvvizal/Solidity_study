@@ -8,7 +8,7 @@ import DecentralBank from "../truffle_abis/DecentralBank.json";
 import ParticleSettings from "./ParticleSetting";
 import Main from "./Main";
 class App extends Component {
-  async componentWillMount() {
+  async componentDidMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
   }
@@ -50,7 +50,9 @@ class App extends Component {
         DecentralBank.abi,
         decentralBankData.address
       );
-      this.setState({ decentralBank });
+
+      await this.setState({ decentralBank });
+
       let stakingBalance = await decentralBank.methods
         .stakingBalance(this.state.account)
         .call();
@@ -117,33 +119,38 @@ class App extends Component {
   render() {
     let content;
 
-    {
-      this.state.loading
-        ? (content = (
-            <p
-              id="loader"
-              className="text-center"
-              style={{ color: "white", margin: "30px" }}
-            >
-              LOADING PLEASE...
-            </p>
-          ))
-        : (content = (
-            <Main
-              tetherBalance={this.state.tetherBalance}
-              rwdBalance={this.state.rwdTokenBalance}
-              stakingBalance={this.state.stakingBalance}
-              stakeTokens={this.stakeTokens}
-              unstakeTokens={this.unstakeTokens}
-              decentralBankContract={this.decentralBank}
-            />
-          ));
+    if (this.state.loading || !this.state.decentralBank._address) {
+      content = (
+        <p
+          id="loader"
+          className="text-center"
+          style={{ color: "white", margin: "30px" }}
+        >
+          LOADING PLEASE...
+        </p>
+      );
+    } else {
+      content = (
+        <Main
+          tetherBalance={this.state.tetherBalance}
+          rwdBalance={this.state.rwdTokenBalance}
+          stakingBalance={this.state.stakingBalance}
+          stakeTokens={this.stakeTokens}
+          unstakeTokens={this.unstakeTokens}
+          decentralBankContract={this.state.decentralBank}
+          tetherContract={this.state.tether}
+          rwdContract={this.state.rwd}
+        />
+      );
     }
 
     return (
       <div className="App" style={{ position: "relative" }}>
+        <ParticleSettings />
         <div style={{ position: "absolute" }}></div>
+
         <Navbar account={this.state.account} />
+
         <div className="container-fluid mt-5">
           <div className="row">
             <main
