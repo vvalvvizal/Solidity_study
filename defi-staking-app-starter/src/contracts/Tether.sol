@@ -37,7 +37,7 @@ contract Tether{
 
     function approve(address _spender, uint256 _value) public returns (bool success){
         allowance[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
+        emit Approval(msg.sender, _spender, _value);//event 발생
         return true;
     }
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
@@ -48,7 +48,7 @@ contract Tether{
         balanceOf[_from] -= _value;
 
         allowance[msg.sender][_from] -= _value;
-        emit Transfer(_from, _to, _value);
+        emit Transfer(_from, _to, _value);//event  발생
         return true;
     }
 }
