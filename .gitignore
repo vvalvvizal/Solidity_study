@@ -1,7 +1,11 @@
+# Ignore node_modules folder
 node_modules/
 
+# Ignore truffle_abis folder
 truffle_abis/
 
+# Ignore .env file
 .env
 
+# Ignore package-lock.json
 package-lock.json
