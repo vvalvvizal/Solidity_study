@@ -4,18 +4,17 @@ pragma solidity ^0.8.13;
 import "./NTT.sol";
 
 contract UseNTT {
-
-    address public owner;
     NTT public ntt;
-    constructor(address _NTTAddress) {
-        owner = msg.sender;
-        ntt = NTT(_NTTAddress); 
+
+    constructor(address _nttAddress) {
+        ntt = NTT(_nttAddress);
     }
 
     function useNTT(address receiver) public {
+        uint256 tokenId = 0; // Define token ID
         address minter = address(this);
-        uint256 tokenId = 0;
-        ntt.safeMint(minter, tokenId);
-        ntt.transferFrom(minter, receiver, tokenId);
+        ntt.Mint(minter, tokenId);
+
+        ntt.safeTransfer(minter, receiver, tokenId);
     }
 }

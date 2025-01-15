@@ -19,9 +19,9 @@ module.exports = {
           `https://eth-sepolia.g.alchemy.com/v2/${process.env.AICHEMY_PROJECT_ID}`
         ),
       network_id: 11155111,
-      gas: 1000000, // 가스 한도를 낮춤
-      maxFeePerGas: 2e8, // 가스 가격을 낮춤
-      maxPriorityFeePerGas: 1e8, // 우선순위 보수를 낮춤
+      gas: 5000000,
+      maxFeePerGas: 20000000000,
+      maxPriorityFeePerGas: 2000000000,
     },
   },
   contracts_directory: "./contracts/",

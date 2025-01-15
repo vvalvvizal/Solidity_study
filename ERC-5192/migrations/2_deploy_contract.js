@@ -1,22 +1,16 @@
 const NTT = artifacts.require("NTT");
 const UseNTT = artifacts.require("UseNTT");
 
-module.exports = async function (deployer) {
-  const name = "MyNTTToken";
-  const symbol = "MNT";
+module.exports = async function (deployer, network, accounts) {
+  const name = "Non-Transferrable Token";
+  const symbol = "NTT";
   const isLocked = true;
 
-  const gasLimit = 5000000; // 가스 한도
-  const gasPrice = 1000000000; // 가스 가격을 낮춰볼 것
+  await deployer.deploy(NTT, name, symbol, isLocked);
+  const nttInstance = await NTT.deployed();
 
-  await deployer.deploy(NTT, name, symbol, isLocked, {
-    gas: gasLimit,
-    gasPrice: gasPrice,
-  });
-  const ntt = await NTT.deployed();
+  await deployer.deploy(UseNTT, nttInstance.address);
+  const useNttInstance = await UseNTT.deployed();
 
-  await deployer.deploy(UseNTT, ntt.address, {
-    gas: gasLimit,
-    gasPrice: gasPrice,
-  });
+  console.log("UseNTT deployed at:", useNttInstance.address);
 };
